@@ -1,0 +1,56 @@
+<div class="dialog">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">{{ data.name }} {{ data.titleKey | translate }}</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body overflow-auto" style="height: 70vh;">
+    <form [formGroup]="resultsForm">
+      <input type="text" id="id" formControlName="grandprixId" hidden="true">
+      <div formGroupName="grandprix">
+        <div formArrayName="raceResults">
+          <div class="form-row">
+            <div class="col-1">
+              <label>{{'FORM.LABELS.POSITION' | translate}}</label>
+            </div>
+            <div class="col-6">
+              <label>{{'FORM.LABELS.DRIVER' | translate}}</label>
+            </div>
+            <div class="col-4">
+              <label>{{'FORM.LABELS.TIME' | translate}}</label>
+            </div>
+            <div class="col-1">
+              <label>{{'FORM.LABELS.LAPS' | translate}}</label>
+            </div>
+          </div>
+          <div *ngFor="let child of resultsForm.get('grandprix.raceResults').controls; let i = index">
+            <div [formGroupName]="i" class="form-row mt-1">
+              <div class="col-1">
+                <input formControlName="position" class="form-control" />
+              </div>
+              <div class="col-6">
+                <select class="form-control" id="country" formControlName="driverId">
+                  <option *ngFor="let driver of driversService.drivers$ | async" [value]="driver.id">{{ driver.name }}</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <input formControlName="time" class="form-control" />
+              </div>
+              <div class="col-1">
+                <input formControlName="laps" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info mt-2" (click)="addRow()"><i class="fa fa-plus"></i></button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-success" ngbAutofocus (click)="modal.close(resultsForm.value)">{{'BUTTONS.SAVE' | translate}}</button>
+  </div>
+</div>

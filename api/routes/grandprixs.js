@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const grandprixs = require('../grandprixs/grandprixs.service');
 
-/* GET teams listing. */
+/* GET grand prixs listing. */
 router.get('/:year', async (req, res, next) => {
   try {
     const result = await grandprixs.all(req.params['year']);

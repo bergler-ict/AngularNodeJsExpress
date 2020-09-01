@@ -1,1 +1,31 @@
-<p>Calendar overview works!</p>
+<div class="container d-flex justify-content-start p-0 mt-5">
+  <h3>{{'CALENDAR.HEADER' | translate}}</h3>
+</div>
+<div class="table-responsive">
+  <table class="table table-dark table-striped table-hover">
+    <thead>
+      <tr>
+        <th>{{'CALENDAR.TABLE.HEADERS.NAME' | translate}}</th>
+        <th>{{'CALENDAR.TABLE.HEADERS.CIRCUIT' | translate}}</th>
+        <th>{{'CALENDAR.TABLE.HEADERS.DATE' | translate}}</th>
+        <th class="d-flex justify-content-end">
+          <button class="btn btn-outline-success btn-sm p-1" (click)=onCreate()>
+            <i class="fas fa-plus"></i>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gp of calendarService.grandprixs$ | async">
+        <td>{{ gp.date | date:'dd-MM-yyyy' }}</td>
+        <td>{{ gp.name }}</td>
+        <td>{{ gp.circuit }}</td>
+        <td class="d-flex justify-content-end">
+          <button class="btn btn-outline-info btn-sm mr-1 p-1" (click)="onEdit(gp)"><i class="fas fa-pencil-alt"></i></button>
+          <button class="btn btn-outline-success btn-sm mr-1 p-1" (click)="onAddRaceResults(gp)" placement="top" ngbTooltip="{{'TOOLTIPS.ADD.RACERESULTS' | translate}}"><i class="fas fa-list-ol"></i></button>
+          <button class="btn btn-outline-danger btn-sm p-1" (click)="onDelete(gp)"><i class="far fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

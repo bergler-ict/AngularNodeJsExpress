@@ -23,6 +23,16 @@ const getAllRaceResults = async (grandPrixId) => {
   return result.recordsets[0];    
 }
 
+const setRaceResults = async (grandPrixId, raceResults) => {
+  const sqlCommand = factory.updateRaceResultsCommand(grandPrixId, raceResults);
+
+  database.previewParameterizedQuery(sqlCommand.text, sqlCommand.inputParameters);
+  const result = await database.executeSql(sqlCommand);
+console.log('Results:', result);
+  return result.rowsAffected[raceResults.length];
+}
+
 module.exports = { 
-  all: getAllRaceResults
+  all: getAllRaceResults,
+  modify: setRaceResults
  };

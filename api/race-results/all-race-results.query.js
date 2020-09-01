@@ -8,22 +8,20 @@ class AllRaceResultsQuery {
 
   get queryText() {
     return `SELECT 
-              D.Name,
-              RR.position,
-              RR.time,
-              RR.laps,
-              ST.Score as points
-            FROM RaceResults RR
-            INNER JOIN Driver D ON D.Id = RR.DriverId
-            LEFT JOIN ScoreTable ST ON ST.Position = RR.Position
-            WHERE RR.GrandPrixId = @GrandPrixID
-            ORDER BY position`;
+              grandprixId,
+              driverId,
+              position,
+              time,
+              laps
+            FROM RaceResults
+            WHERE GrandprixId = @GrandprixId
+            ORDER BY Position`;
   }
 
   get inputParameters() {
     return [
       {
-        name: 'GrandPrixID',
+        name: 'GrandprixId',
         type: mssql.Int(),
         value: this._grandPrixId
       }

@@ -25,7 +25,7 @@ const getAllGrandprixs = async (year) => {
 }
 
 module.exports = {
-  all: getAllGrandprixs,
+  all: getAllGrandprixs
   // create: insertTeam,
   // modify: updateTeam,
   // delete: deleteTeam
