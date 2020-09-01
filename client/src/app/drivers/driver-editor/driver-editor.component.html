@@ -1,0 +1,53 @@
+<div class="dialog">
+  <div class="modal-header">
+    <h4 *ngIf="(driver$ | async).id === 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.NEWDRIVER' | translate}}</h4>
+    <h4 *ngIf="(driver$ | async).id > 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.EDITDRIVER' | translate}}</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="driverFormgroup" novalidate>
+      <input type="text" id="id" formControlName="id" hidden="true">
+      <div class="form-group">
+        <label for="name">{{'FORM.LABELS.NAME' | translate}}</label>
+        <input type="text" class="form-control" id="name" formControlName="name" ngbAutofocus>
+      </div>
+      <div class="form-group">
+        <label for="birthDate">{{'FORM.LABELS.BIRTHDATE' | translate}}</label>
+        <input type="date" class="form-control" id="birthDate" formControlName="birthDate">
+      </div>
+      <div class="form-group">
+        <label for="startnumber">{{'FORM.LABELS.STARTNUMBER' | translate}}</label>
+        <input type="number" class="form-control" id="startnumber" formControlName="startNumber">
+      </div>
+      <div class="form-group">
+        <label for="grandprixs">{{'FORM.LABELS.NOOFGPS' | translate}}</label>
+        <input type="number" class="form-control" id="grandprixs" formControlName="grandPrixs">
+      </div>
+      <div class="form-group">
+        <label for="podiums">{{'FORM.LABELS.NOOFPODIUMS' | translate}}</label>
+        <input type="number" class="form-control" id="podiums" formControlName="podiums">
+      </div>
+      <div class="form-group">
+        <label for="team">{{'FORM.LABELS.TEAM' | translate}}</label>
+        <select class="form-control" id="team" formControlName="teamId">
+          <option *ngFor="let team of teamsService.teams$ | async" [value]="team.id">{{ team.fullname }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="country">{{'FORM.LABELS.COUNTRY' | translate}}</label>
+        <select class="form-control" id="country" formControlName="countryId">
+          <option *ngFor="let country of countryService.countries$ | async" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
+    <button *ngIf="(driver$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
+      [disabled]="!driverFormgroup.valid">{{'BUTTONS.CREATE' | translate}}</button>
+    <button *ngIf="(driver$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
+      [disabled]="!driverFormgroup.valid">{{'BUTTONS.SAVE' | translate}}</button>
+  </div>
+</div>

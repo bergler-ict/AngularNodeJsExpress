@@ -1,0 +1,11 @@
+### GET driver rankings for a specific year
+@year = 2020
+
+GET http://localhost:4500/api/rankings/driver?year={{year}}
+Content-Type: application/json
+
+### GET team rankings for a specific year
+@year = 2020
+
+GET http://localhost:4500/api/rankings/team?year={{year}}
+Content-Type: application/json

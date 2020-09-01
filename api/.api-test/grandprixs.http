@@ -1,0 +1,6 @@
+### GET all granprix for given year
+@year = 2020
+
+GET http://localhost:4500/api/grandprixs/{{year}}
+Content-Type: application/json
+

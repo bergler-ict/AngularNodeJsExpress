@@ -1,0 +1,37 @@
+<div class="dialog">
+  <div class="modal-header">
+    <h4 *ngIf="(team$ | async).id === 0" class="modal-title" id="modal-title">{{'TEAMS.DIALOGS.HEADERS.NEWTEAM' | translate}}</h4>
+    <h4 *ngIf="(team$ | async).id > 0" class="modal-title" id="modal-title">{{'TEAMS.DIALOGS.HEADERS.EDITTEAM' | translate}}</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="teamFormgroup" novalidate>
+      <input type="text" id="id" formControlName="id" hidden="true">
+      <div class="form-group">
+        <label for="name">{{'FORM.LABELS.NAME' | translate}}</label>
+        <input type="text" class="form-control" id="name" formControlName="name" ngbAutofocus>
+      </div>
+      <div class="form-group">
+        <label for="name">{{'FORM.LABELS.FULLNAME' | translate}}</label>
+        <input type="text" class="form-control" id="fullname" formControlName="fullname">
+      </div>
+      <div class="form-group">
+        <label for="manufacturer">{{'FORM.LABELS.MANUFACTURER' | translate}}</label>
+        <input type="text" class="form-control" id="manufacturer" formControlName="manufacturer">
+      </div>
+      <div class="form-group">
+        <label for="country">{{'FORM.LABELS.COUNTRY' | translate}}</label>
+        <select class="form-control" id="country" formControlName="countryId">
+          <option *ngFor="let country of countryService.countries$ | async" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
+    <button *ngIf="(team$ | async).id === 0"type="button" class="btn btn-success"  (click)="modal.close(teamFormgroup)" [disabled]="!teamFormgroup.valid">{{'BUTTONS.CREATE' | translate}}</button>
+    <button *ngIf="(team$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(teamFormgroup)" [disabled]="!teamFormgroup.valid">{{'BUTTONS.SAVE' | translate}}</button>
+  </div>
+</div>

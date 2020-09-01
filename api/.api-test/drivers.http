@@ -1,0 +1,4 @@
+### GET all drivers
+GET http://localhost:4500/api/drivers
+Content-Type: application/json
+

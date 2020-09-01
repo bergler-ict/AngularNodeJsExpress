@@ -1,0 +1,7 @@
+
+### GET Get the race results of a grandprix by the grandprix ID
+@grandPrixId = 22
+
+GET http://localhost:4500/api/raceresults/{{grandPrixId}}
+Content-Type: application/json
+
