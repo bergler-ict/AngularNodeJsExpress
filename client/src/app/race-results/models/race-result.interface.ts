@@ -4,6 +4,7 @@ export interface IRaceResult {
   position: number;
   time: string;
   laps: number;
+  fastestLap: boolean;
 }
 
 export const DefaultRaceResult: IRaceResult = {
@@ -11,5 +12,6 @@ export const DefaultRaceResult: IRaceResult = {
   driverId: 0,
   position: 0,
   time: '',
-  laps: 0
+  laps: 0,
+  fastestLap: false
 }

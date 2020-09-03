@@ -14,15 +14,15 @@ Reference application NodeJs and Express as part of the Bergler Competence Cente
 
 All source code and required npm packages are now installed. In the api folder there is also a folder named *sqlscripts*. Within this folder you will find two SQL scripts. The first script is to create the F1Manager database and its tables (*create_f1manager_database.sql*). The second script (*insert_data.sql*) is a data insert script which will provide a starter set of data.
 
-8. Run the create database script on a MSSQL Server instance
-9. Run the insert data script on the F1Manager database
+9. Run the create database script on a MSSQL Server instance
+10. Run the insert data script on the F1Manager database
 
 Now you are ready to start the application. The application parts (api and frontend) needs to be started separately.
 
-10. Move into the *api* folder
-11. Run the command *start-dev.cmd* (this will build and start the NodeJs API)
-12. Move into the *client* folder 
-13. Run the command *start-dev.cmd* (this will build and start the Angular client)
+11. Move into the *api* folder
+12. Run the command *start-dev.cmd* (this will build and start the NodeJs API)
+13. Move into the *client* folder 
+14. Run the command *start-dev.cmd* (this will build and start the Angular client)
 
 Now you are all set to go and explore NodeJs and Express. Have fun :-)
 

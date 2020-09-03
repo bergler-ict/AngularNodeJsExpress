@@ -27,8 +27,8 @@ class UpdateRaceResultsCommand {
     this._options.raceResults.forEach(rr => {
       index = index + 1;
       queryValues = queryValues + `
-      INSERT INTO RaceResults (GrandPrixId, DriverId, Position, Time, Laps)
-      VALUES(@GrandPrixId${index}, @DriverId${index}, @Position${index}, @Time${index}, @Laps${index})`
+      INSERT INTO RaceResults (GrandPrixId, DriverId, Position, Time, Laps, PulledFastestLap)
+      VALUES(@GrandPrixId${index}, @DriverId${index}, @Position${index}, @Time${index}, @Laps${index}, @FastestLap${index})`
     });
 
     return queryValues;
@@ -44,6 +44,7 @@ class UpdateRaceResultsCommand {
       this._inputParameters.push({ name: 'Position' + index.toString(), type: mssql.Int(), value: rr.position });
       this._inputParameters.push({ name: 'Time' + index.toString(), type: mssql.NVarChar(25), value: rr.time });
       this._inputParameters.push({ name: 'Laps' + index.toString(), type: mssql.Int(), value: rr.laps });
+      this._inputParameters.push({ name: 'FastestLap' + index.toString(), type: mssql.Bit(), value: rr.fastestLap });
     });
   }
 }

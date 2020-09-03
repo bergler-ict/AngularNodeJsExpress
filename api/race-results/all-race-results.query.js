@@ -12,7 +12,8 @@ class AllRaceResultsQuery {
               driverId,
               position,
               time,
-              laps
+              laps,
+              PulledFastestLap as fastestLap
             FROM RaceResults
             WHERE GrandprixId = @GrandprixId
             ORDER BY Position`;

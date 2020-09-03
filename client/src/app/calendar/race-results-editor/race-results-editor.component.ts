@@ -8,6 +8,14 @@ import { IRaceResult, DefaultRaceResult } from '../../race-results/models/race-r
 import { DriversService } from 'src/app/drivers/drivers.service';
 import { RaceResultsService } from 'src/app/race-results/race-results.service';
 
+enum FormFields {
+  position = 'position',
+  driverId = 'driverId',
+  time = 'time',
+  laps = 'laps',
+  fastestLap = 'fastestLap'
+}
+
 @Component({
   selector: 'fom-race-results-editor',
   templateUrl: './race-results-editor.component.html',
@@ -35,6 +43,7 @@ export class RaceResultsEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.raceResultsService.raceresults$.next([]);
     this.unsubscribe$.complete();
     this.unsubscribe$.next();
   }
@@ -49,8 +58,18 @@ export class RaceResultsEditorComponent implements OnInit, OnDestroy {
       position: [result.position],
       driverId: [result.driverId],
       time: [result.time],
-      laps: [result.laps]
+      laps: [result.laps],
+      fastestLap: [result.fastestLap]
     }));
+  }
+
+  onFastestLapSet(child) {
+    const groups = (this.resultsForm.get('grandprix.raceResults') as FormArray).controls;
+    groups.forEach((fg:FormGroup) => {
+      if (fg.controls[FormFields.position].value !== child.controls[FormFields.position].value) {
+        fg.controls[FormFields.fastestLap].setValue(false);
+      }
+    });
   }
 
   private patch(results: IRaceResult[]) {
@@ -62,7 +81,8 @@ export class RaceResultsEditorComponent implements OnInit, OnDestroy {
         position: [r.position],
         driverId: [r.driverId],
         time: [r.time],
-        laps: [r.laps]
+        laps: [r.laps],
+        fastestLap: [r.fastestLap]
       }))
     });
   }

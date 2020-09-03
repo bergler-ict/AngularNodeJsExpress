@@ -7,7 +7,7 @@ class DriverRankingsQuery {
   }
 
   get queryText() {
-    return `SELECT D.startNumber, D.[name], SUM(ST.Score) as score
+    return `SELECT D.startNumber, D.[name], SUM(ST.Score + (CASE WHEN RR.PulledFastestLap = 1 THEN 1 ELSE 0 END)) as score
             FROM Driver D
             INNER JOIN RaceResults RR ON RR.DriverId = D.Id
             INNER JOIN GrandPrix GP ON GP.Id = RR.GrandPrixId

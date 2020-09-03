@@ -17,11 +17,14 @@
             <div class="col-6">
               <label>{{'FORM.LABELS.DRIVER' | translate}}</label>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <label>{{'FORM.LABELS.TIME' | translate}}</label>
             </div>
             <div class="col-1">
               <label>{{'FORM.LABELS.LAPS' | translate}}</label>
+            </div>
+            <div class="col-1">
+              <label>{{'FORM.LABELS.FASTESTLAP' | translate}}</label>
             </div>
           </div>
           <div *ngFor="let child of resultsForm.get('grandprix.raceResults').controls; let i = index">
@@ -34,11 +37,14 @@
                   <option *ngFor="let driver of driversService.drivers$ | async" [value]="driver.id">{{ driver.name }}</option>
                 </select>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <input formControlName="time" class="form-control" />
               </div>
               <div class="col-1">
                 <input formControlName="laps" class="form-control" />
+              </div>
+              <div class="col-1">
+                <input type="checkbox" formControlName="fastestLap" class="form-control" (click)="onFastestLapSet(child)" />
               </div>
             </div>
           </div>
