@@ -101,6 +101,7 @@ CREATE TABLE [dbo].[RaceResults](
 	[Position] [int] NOT NULL,
 	[Time] [nvarchar](25) NULL,
 	[Laps] [int] NULL,
+	[PulledFastestLap] [bit] NOT NULL
  CONSTRAINT [PK_RaceResults] PRIMARY KEY CLUSTERED 
 (
 	[GrandPrixId] ASC,
@@ -176,6 +177,8 @@ ALTER TABLE [dbo].[RaceCalendar]  WITH CHECK ADD  CONSTRAINT [FK_RaceCalendar_Gr
 REFERENCES [dbo].[GrandPrix] ([Id])
 GO
 ALTER TABLE [dbo].[RaceCalendar] CHECK CONSTRAINT [FK_RaceCalendar_GrandPrix]
+GO
+ALTER TABLE [dbo].[RaceResults] ADD  CONSTRAINT [DF_RaceResults_PulledFasttestLap]  DEFAULT ((0)) FOR [PulledFastestLap]
 GO
 ALTER TABLE [dbo].[RaceResults]  WITH CHECK ADD  CONSTRAINT [FK_RaceResults_Driver] FOREIGN KEY([DriverId])
 REFERENCES [dbo].[Driver] ([Id])
