@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
 import { IDriver, DefaultDriver } from '../models/driver.interface';
 import { DriversService } from '../drivers.service';
 import { takeUntil } from 'rxjs/operators';
@@ -8,16 +7,18 @@ import { DriverEditorComponent } from '../driver-editor/driver-editor.component'
 import { MessagesService } from 'src/app/core/messages/messages.service';
 import { MessageType } from 'src/app/core/messages/message-types.enum';
 import { ConfirmationDialogComponent } from 'src/app/core/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ComponentBase } from 'src/app/core/component-base';
 
 @Component({
   selector: 'fom-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })
-export class OverviewComponent implements OnInit {
-  unsubscribe$ = new Subject();
+export class OverviewComponent extends ComponentBase implements OnInit {
 
-  constructor(public driversService: DriversService, private messageService: MessagesService, private dialogService: NgbModal) { }
+  constructor(public driversService: DriversService, private messageService: MessagesService, private dialogService: NgbModal) {
+    super();
+  }
 
   ngOnInit(): void {
     this.driversService.getAllDrivers();

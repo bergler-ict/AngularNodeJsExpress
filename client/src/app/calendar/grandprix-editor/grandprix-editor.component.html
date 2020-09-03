@@ -1,0 +1,35 @@
+<div class="dialog">
+  <div class="modal-header">
+    <h4 *ngIf="(grandprix$ | async).id === 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.NEWGRANDPRIX' | translate}}</h4>
+    <h4 *ngIf="(grandprix$ | async).id > 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.EDITGRANDPRIX' | translate}}</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="grandprixFormgroup" novalidate>
+      <input type="text" id="id" formControlName="id" hidden="true">
+      <div class="form-group">
+        <label for="name">{{'FORM.LABELS.NAME' | translate}}</label>
+        <input type="text" class="form-control" id="name" formControlName="name" ngbAutofocus>
+      </div>
+      <div class="form-group">
+        <label for="date">{{'FORM.LABELS.DATE' | translate}}</label>
+        <input type="date" class="form-control" id="date" formControlName="date">
+      </div>
+      <div class="form-group">
+        <label for="circuit">{{'FORM.LABELS.CIRCUIT' | translate}}</label>
+        <select class="form-control" id="circuit" formControlName="circuitId">
+          <option *ngFor="let circuit of circuitsService.circuitsItems$ | async" [value]="circuit.value">{{ circuit.label }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
+    <button *ngIf="(grandprix$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
+      [disabled]="!grandprixFormgroup.valid">{{'BUTTONS.CREATE' | translate}}</button>
+    <button *ngIf="(grandprix$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
+      [disabled]="!grandprixFormgroup.valid">{{'BUTTONS.SAVE' | translate}}</button>
+  </div>
+</div>

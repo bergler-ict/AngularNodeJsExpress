@@ -9,10 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class PromptDialogComponent implements OnInit {
   data: any;
 
-  constructor(public modal: NgbActiveModal) {
+  constructor(public modal: NgbActiveModal) { }
 
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit() {}
 }

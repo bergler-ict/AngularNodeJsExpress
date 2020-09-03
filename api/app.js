@@ -11,6 +11,7 @@ const driversRouter = require('./routes/drivers');
 const raceResultsRouter = require('./routes/raceresults');
 const rankingsRouter = require('./routes/rankings');
 const grandprixRouter = require('./routes/grandprixs');
+const circuitsRouter = require('./routes/circuits');
 
 const app = express();
 const routePrefix = '/api';
@@ -27,6 +28,7 @@ app.use(`${routePrefix}/drivers`, driversRouter);
 app.use(`${routePrefix}/raceresults`, raceResultsRouter);
 app.use(`${routePrefix}/rankings`, rankingsRouter);
 app.use(`${routePrefix}/grandprixs`, grandprixRouter);
+app.use(`${routePrefix}/circuits`, circuitsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -7,10 +7,11 @@ class AllGrandprixsQuery {
   }
 
   get queryText() {
-    return `SELECT GP.id, GP.[name], C.[name] as circuit, GP.[year], GP.[date]
+    return `SELECT GP.id, GP.[name], C.[name] as circuit, GP.[year], GP.[date], C.Id as circuitId
             FROM GrandPrix GP
             INNER JOIN Circuits C ON C.Id = GP.CircuitId
-            WHERE GP.[Year] = @Year`;
+            WHERE GP.[Year] = @Year
+            ORDER BY GP.[Date] asc`;
   }
 
   get inputParameters() {

@@ -32,13 +32,13 @@
       <div class="form-group">
         <label for="team">{{'FORM.LABELS.TEAM' | translate}}</label>
         <select class="form-control" id="team" formControlName="teamId">
-          <option *ngFor="let team of teamsService.teams$ | async" [value]="team.id">{{ team.fullname }}</option>
+          <option *ngFor="let team of teamsService.teamSelectItems$ | async" [value]="team.value">{{ team.label }}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="country">{{'FORM.LABELS.COUNTRY' | translate}}</label>
         <select class="form-control" id="country" formControlName="countryId">
-          <option *ngFor="let country of countryService.countries$ | async" [value]="country.id">{{ country.name }}</option>
+          <option *ngFor="let country of countryService.countrySelectItems$ | async" [value]="country.value">{{ country.label }}</option>
         </select>
       </div>
     </form>

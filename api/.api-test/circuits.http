@@ -1,0 +1,7 @@
+### GET all circuits
+GET http://localhost:4500/api/circuits
+Content-Type: application/json
+
+### GET all circuits select items
+GET http://localhost:4500/api/circuits/compact
+Content-Type: application/json

@@ -24,9 +24,27 @@ const getAllGrandprixs = async (year) => {
   return result.recordsets[0];
 }
 
+const insertGrandprix = async (grandprix) => {
+  const sqlCommand = factory.createInsertGrandprixCommand(grandprix);
+  const result = await database.executeSql(sqlCommand);
+  return result.recordset[0]; // returns the new created grandprix object.
+}
+
+const updateGrandprix = async (grandprix) => {
+  const sqlCommand = factory.createUpdateGrandprixCommand(grandprix);
+  const result = await database.executeSql(sqlCommand);
+  return result.recordset[0]; // returns the updated grandprix object.
+}
+
+const deleteGrandprix = async (id) => {
+  const sqlCommand = factory.createDeleteGrandprixCommand(id);
+  const result = await database.executeSql(sqlCommand);
+  return result.rowsAffected[0];
+}
+
 module.exports = {
-  all: getAllGrandprixs
-  // create: insertTeam,
-  // modify: updateTeam,
-  // delete: deleteTeam
+  all: getAllGrandprixs,
+  create: insertGrandprix,
+  modify: updateGrandprix,
+  delete: deleteGrandprix
 };

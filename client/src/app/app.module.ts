@@ -8,6 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CircuitsService } from './circuits/circuits.service';
 
 export function setupTranslateFactory(service: TranslateService) {
   return () => service.setDefaultLang(service.getBrowserLang());
@@ -41,7 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       useFactory: setupTranslateFactory,
       deps: [TranslateService],
       multi: true
-    }
+    },
+    CircuitsService
   ],
   bootstrap: [AppComponent]
 })

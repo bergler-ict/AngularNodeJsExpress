@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CalendarService } from '../calendar.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { IRaceResult, DefaultRaceResult } from '../../race-results/models/race-result.interface';
 import { DriversService } from 'src/app/drivers/drivers.service';
 import { RaceResultsService } from 'src/app/race-results/race-results.service';
+import { ComponentBase } from 'src/app/core/component-base';
 
 enum FormFields {
   position = 'position',
@@ -21,13 +20,14 @@ enum FormFields {
   templateUrl: './race-results-editor.component.html',
   styleUrls: ['./race-results-editor.component.scss']
 })
-export class RaceResultsEditorComponent implements OnInit, OnDestroy {
+export class RaceResultsEditorComponent extends ComponentBase implements OnInit, OnDestroy {
   data: any;
   resultsForm: FormGroup;
-  unsubscribe$ = new Subject();
 
   constructor(public raceResultsService: RaceResultsService, public driversService: DriversService,
-     public modal: NgbActiveModal, private formBuilder: FormBuilder) { }
+     public modal: NgbActiveModal, private formBuilder: FormBuilder) {
+       super();
+     }
 
   ngOnInit(): void {
     this.driversService.getAllDrivers();
@@ -44,8 +44,6 @@ export class RaceResultsEditorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.raceResultsService.raceresults$.next([]);
-    this.unsubscribe$.complete();
-    this.unsubscribe$.next();
   }
 
   addRow() {

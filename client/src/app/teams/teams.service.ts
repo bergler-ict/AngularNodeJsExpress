@@ -5,12 +5,14 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { MessagesService } from '../core/messages/messages.service';
 import { catchError } from 'rxjs/operators';
 import { MessageType } from '../core/messages/message-types.enum';
+import { ISelectItem } from '../core/models/select-item.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
   teams$ = new BehaviorSubject<ITeam[]>([]);
+  teamSelectItems$ = new BehaviorSubject<ISelectItem[]>([]);
 
   constructor(private http: HttpClient, private messageService: MessagesService) { }
 
@@ -20,6 +22,15 @@ export class TeamsService {
       return of([]);
     })).subscribe(response => {
       this.teams$.next(response);
+    });
+  }
+
+  getTeamSelectItems(): void {
+    this.http.get<ISelectItem[]>('/api/teams/compact').pipe(catchError((err) => {
+      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+      return of([]);
+    })).subscribe(response => {
+      this.teamSelectItems$.next(response);
     });
   }
 

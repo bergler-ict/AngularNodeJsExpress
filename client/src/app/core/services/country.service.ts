@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICountry } from '../models/country.interface';
 import { HttpClient } from '@angular/common/http';
+import { ISelectItem } from '../models/select-item.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  countries$ = new BehaviorSubject<ICountry[]>([]);
+  countrySelectItems$ = new BehaviorSubject<ISelectItem[]>([]);
 
   constructor(private http: HttpClient) { }
 
-  getAllCountries() {
-    this.http.get<ICountry[]>('api/countries').subscribe((response) => {
-      this.countries$.next(response);
+  getCountrySelectItems() {
+    this.http.get<ISelectItem[]>('api/countries/compact').subscribe((response) => {
+      this.countrySelectItems$.next(response);
     });
   }
 }
