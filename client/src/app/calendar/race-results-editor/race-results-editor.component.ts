@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { IRaceResult, DefaultRaceResult } from '../../race-results/models/race-result.interface';
+import { IRaceResult, DefaultRaceResult } from '../../core/models/race-result.interface';
 import { DriversService } from 'src/app/drivers/drivers.service';
-import { RaceResultsService } from 'src/app/race-results/race-results.service';
-import { ComponentBase } from 'src/app/core/component-base';
+import { RaceResultsService } from 'src/app/core/services/race-results.service';
+import { EditorComponentBase } from 'src/app/core/editor-component-base';
 
 enum FormFields {
   position = 'position',
@@ -20,7 +20,7 @@ enum FormFields {
   templateUrl: './race-results-editor.component.html',
   styleUrls: ['./race-results-editor.component.scss']
 })
-export class RaceResultsEditorComponent extends ComponentBase implements OnInit, OnDestroy {
+export class RaceResultsEditorComponent extends EditorComponentBase<IRaceResult> implements OnInit, OnDestroy {
   data: any;
   resultsForm: FormGroup;
 
@@ -30,16 +30,22 @@ export class RaceResultsEditorComponent extends ComponentBase implements OnInit,
      }
 
   ngOnInit(): void {
-    this.driversService.getAllDrivers();
+    this.driversService.loadAll()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(drivers => this.driversService.items$.next(drivers));
+
     this.resultsForm = this.formBuilder.group({
       grandprixId: [this.data.grandprixId],
       grandprix: this.formBuilder.group({
         raceResults: this.formBuilder.array([])
       })
     });
-    this.raceResultsService.raceresults$.pipe(takeUntil(this.unsubscribe$)).subscribe(results => {
-      this.patch(results);
-    });
+
+    this.raceResultsService.raceresults$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        this.patch(results);
+      });
   }
 
   ngOnDestroy(): void {

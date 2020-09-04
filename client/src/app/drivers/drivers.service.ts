@@ -1,43 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { IDriver, DefaultDriver } from './models/driver.interface';
+import { Observable, of } from 'rxjs';
+import { IDriver, DefaultDriver } from '../core/models/driver.interface';
 import { MessagesService } from '../core/messages/messages.service';
 import { catchError } from 'rxjs/operators';
 import { MessageType } from '../core/messages/message-types.enum';
+import { ServiceBase } from '../core/services/service-base';
+import { ISelectItem } from '../core/models/select-item.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DriversService {
-  drivers$ = new BehaviorSubject<IDriver[]>([]);
+export class DriversService extends ServiceBase<IDriver> {
 
-  constructor(private http: HttpClient, private messageService: MessagesService) { }
+  constructor(private http: HttpClient, private messageService: MessagesService) {
+    super('/api/drivers');
+  }
 
-  getAllDrivers(): void {
-    this.http.get<IDriver[]>('/api/drivers').pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+  loadAll(): Observable<IDriver[]> {
+    return this.http.get<IDriver[]>(`${this.rootUri}`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
       return of([]);
-    })).subscribe(drivers => this.drivers$.next(drivers));
+    }));
   }
 
-  updateDriver(driver: IDriver): Observable<IDriver> {
-    return this.http.put<IDriver>('api/drivers', driver).pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+  loadSelectItems(): Observable<ISelectItem[]> {
+    return this.http.get<ISelectItem[]>(`${this.rootUri}/compact`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
+      return of([]);
+    }));
+  }
+
+  update(driver: IDriver): Observable<IDriver> {
+    return this.http.put<IDriver>(`${this.rootUri}`, driver).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
       return of(DefaultDriver);
     }));
   }
 
-  createDriver(driver: IDriver): Observable<IDriver> {
-    return this.http.post<IDriver>('api/drivers', driver).pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+  create(driver: IDriver): Observable<IDriver> {
+    return this.http.post<IDriver>(`${this.rootUri}`, driver).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
       return of(DefaultDriver);
     }));
   }
 
-  deleteDriver(id: number): Observable<number> {
-    return this.http.delete<number>(`/api/drivers/${id}`).pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+  delete(id: number): Observable<number> {
+    return this.http.delete<number>(`${this.rootUri}/${id}`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
       return of(0);
     }));
   }

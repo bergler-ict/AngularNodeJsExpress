@@ -5,11 +5,11 @@
      | . ` |/ _ \ / _` |/ _ \_   | |\___ \   / _ \/\ |  __| \ \/ / '_ \| '__/ _ \/ __/ __|
      | |\  | (_) | (_| |  __/ |__| |____) | | (_>  < | |____ >  <| |_) | | |  __/\__ \__ \
      |_| \_|\___/ \__,_|\___|\____/|_____/   \___/\/ |______/_/\_\ .__/|_|  \___||___/___/
-                                                             | |                      
-                                                             |_|                      
+                                                                 | |                      
+                                                                 |_|                      
 
 ---------------------------------
-Reference application as part of the Bergler Competence Center NodeJs and Express webinar. The application divided into two parts:
+Reference application as part of the Bergler Competence Center NodeJs and Express webinar. The application is divided into two parts:
 
 - **client** application -> written in Angular
 - web **API** -> written in NodeJs and uses the express package

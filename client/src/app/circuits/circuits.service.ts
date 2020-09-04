@@ -1,32 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ICircuit } from './models/circuit.interface';
+import { ICircuit, DefaultCircuit } from '../core/models/circuit.interface';
 import { MessagesService } from '../core/messages/messages.service';
 import { catchError } from 'rxjs/operators';
 import { MessageType } from '../core/messages/message-types.enum';
-import { of, BehaviorSubject } from 'rxjs';
+import { of, BehaviorSubject, Observable } from 'rxjs';
 import { ISelectItem } from '../core/models/select-item.interface';
+import { ServiceBase } from '../core/services/service-base';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CircuitsService {
-  circuits$ = new BehaviorSubject<ICircuit[]>([]);
-  circuitsItems$ = new BehaviorSubject<ISelectItem[]>([]);
+export class CircuitsService extends ServiceBase<ICircuit> {
 
-  constructor(private http: HttpClient, private messageService: MessagesService) { }
-
-  getAllCircuits(): void {
-    this.http.get<ICircuit[]>('/api/circuits').pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
-      return of([]);
-    })).subscribe(circuits => this.circuits$.next(circuits));
+  constructor(private http: HttpClient, private messageService: MessagesService) {
+    super('api/circuits');
   }
 
-  getCircuitSelectItems(): void {
-    this.http.get<ISelectItem[]>('/api/circuits/compact').pipe(catchError((err) => {
-      this.messageService.showSelfclosingAlert(err, MessageType.Danger, 2500);
+  loadAll(): Observable<ICircuit[]> {
+    return this.http.get<ICircuit[]>(`${this.rootUri}`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
       return of([]);
-    })).subscribe(circuits => this.circuitsItems$.next(circuits));
+    }));
+  }
+
+  loadSelectItems(): Observable<ISelectItem[]> {
+    return this.http.get<ISelectItem[]>(`${this.rootUri}/compact`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
+      return of([]);
+    }));
+  }
+
+  create(circuit: ICircuit): Observable<ICircuit> {
+    return this.http.post<ICircuit>(`${this.rootUri}`, circuit).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
+      return of(DefaultCircuit);
+    }));
+  }
+
+  update(circuit: ICircuit): Observable<ICircuit> {
+    return this.http.put<ICircuit>(`${this.rootUri}`, circuit).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
+      return of(DefaultCircuit);
+    }));
+  }
+
+  delete(id: number) {
+    return this.http.delete<number>(`${this.rootUri}/${id}`).pipe(catchError((err) => {
+      this.messageService.show(err, MessageType.Danger);
+      return of(0);
+    }));
   }
 }

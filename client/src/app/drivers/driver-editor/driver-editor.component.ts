@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { IDriver, DefaultDriver } from '../models/driver.interface';
+import { IDriver } from '../../core/models/driver.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TeamsService } from 'src/app/teams/teams.service';
 import { CountryService } from 'src/app/core/services/country.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ComponentBase } from 'src/app/core/component-base';
 import { takeUntil } from 'rxjs/operators';
+import { EditorComponentBase } from 'src/app/core/editor-component-base';
 
 @Component({
   selector: 'fom-driver-editor',
   templateUrl: './driver-editor.component.html',
   styleUrls: ['./driver-editor.component.scss']
 })
-export class DriverEditorComponent extends ComponentBase implements OnInit {
-  driver$ = new BehaviorSubject<IDriver>(DefaultDriver);
+export class DriverEditorComponent extends EditorComponentBase<IDriver> implements OnInit {
   driverFormgroup: FormGroup;
 
   constructor(public modal: NgbActiveModal,
@@ -25,10 +23,15 @@ export class DriverEditorComponent extends ComponentBase implements OnInit {
     }
 
   ngOnInit(): void {
-    this.countryService.getCountrySelectItems();
-    this.teamsService.getTeamSelectItems();
+    this.countryService.loadSelectItems()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(items => this.countryService.selectItems$.next(items));
 
-    this.driver$.pipe(takeUntil(this.unsubscribe$)).subscribe(driver => {
+    this.teamsService.loadSelectItems()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(items => this.teamsService.selectItems$.next(items));
+
+    this.item$.pipe(takeUntil(this.unsubscribe$)).subscribe(driver => {
       if(driver) {
         this.driverFormgroup = this.formBuilder.group({
           id: [driver.id],

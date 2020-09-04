@@ -24,3 +24,28 @@ h3 {
 .numeric {
   text-align: right;
 }
+
+a.nav-link.active i {
+  color: #e95e2e;
+}
+
+.table-fixed-header          { overflow-y: auto; height: 80vh; }
+.table-fixed-header thead th { position: sticky; top:0; background-color: #343a40; }
+
+/* Custom Scrollbar using CSS */
+/* scrollbar width */
+.custom-scrollbar-css::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* scrollbar track */
+.custom-scrollbar-css::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+/* scrollbar handle */
+.custom-scrollbar-css::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #f0cb86;
+  background-image: linear-gradient(to top, #f0cb86 0%, #e95e2e 100%);
+}

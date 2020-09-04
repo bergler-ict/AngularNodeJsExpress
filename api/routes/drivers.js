@@ -14,12 +14,23 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/* GET driver select items. */
+router.get('/compact', async (req, res, next) => {
+  try {
+    const result = await drivers.all();
+    res.send(result.map(r => { return { label: r.name, value: r.id } }));
+  } catch (error) { // Catch error thrown by database action (see bin/database.js)
+    console.log('Error: ', error);
+    res.status(error.status).send({ error });
+  }
+});
+
 /* POST Create new team resource. */
 router.post('/', async (req, res, next) => {
   try {
+    const newDriver = { ...req.body };
     // Model validation
     if(validator.validate(req.body)) {
-      const newDriver = { ...req.body };
       const result = await drivers.create(newDriver);
       res.status(201); // Set http status code 201 Created.
       res.send(result); // return created resource (team) as response.

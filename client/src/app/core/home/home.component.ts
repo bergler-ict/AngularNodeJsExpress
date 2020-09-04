@@ -8,6 +8,7 @@ import { RankingService } from '../services/ranking.service';
 })
 export class HomeComponent implements OnInit {
   active = 1;
+  year = new Date().getFullYear();
   
   constructor(public rankingService: RankingService) { }
 

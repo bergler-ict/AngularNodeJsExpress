@@ -1,10 +1,11 @@
 import { OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
-export abstract class ComponentBase implements OnDestroy {
+export class EditorComponentBase<TType> implements OnDestroy {
   unsubscribe$ = new Subject<void>();
+  item$ = new BehaviorSubject<TType>(null)
 
-  constructor() {}
+  constructor() { }
 
   ngOnDestroy(): void {
     // Complete this subject, so all (takeUntil(this.unsubscibe$)) subscriptions of this component are removed on component destruction.

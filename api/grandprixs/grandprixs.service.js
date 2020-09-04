@@ -39,7 +39,7 @@ const updateGrandprix = async (grandprix) => {
 const deleteGrandprix = async (id) => {
   const sqlCommand = factory.createDeleteGrandprixCommand(id);
   const result = await database.executeSql(sqlCommand);
-  return result.rowsAffected[0];
+  return result.rowsAffected[1];
 }
 
 module.exports = {

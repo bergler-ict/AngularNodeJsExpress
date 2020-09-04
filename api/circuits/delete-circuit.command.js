@@ -1,6 +1,6 @@
 const mssql = require('mssql/msnodesqlv8');
 
-class DeleteGrandprixCommand {
+class DeleteCircuitCommand {
 
   constructor(id) {
     this._id = id;
@@ -8,11 +8,7 @@ class DeleteGrandprixCommand {
 
   get queryText() {
     return `DELETE 
-            FROM RaceResults
-            WHERE GrandPrixId = @Id
-
-            DELETE 
-            FROM GrandPrix
+            FROM Circuits
             WHERE Id = @Id`;
   }
 
@@ -28,7 +24,7 @@ class DeleteGrandprixCommand {
 }
 
 function create(id) {
-  return new DeleteGrandprixCommand(id);
+  return new DeleteCircuitCommand(id);
 }
 
 module.exports = { create };

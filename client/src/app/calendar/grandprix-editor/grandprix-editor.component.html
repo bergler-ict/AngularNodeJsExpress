@@ -1,7 +1,7 @@
 <div class="dialog">
   <div class="modal-header">
-    <h4 *ngIf="(grandprix$ | async).id === 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.NEWGRANDPRIX' | translate}}</h4>
-    <h4 *ngIf="(grandprix$ | async).id > 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.EDITGRANDPRIX' | translate}}</h4>
+    <h4 *ngIf="(item$ | async).id === 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.NEWGRANDPRIX' | translate}}</h4>
+    <h4 *ngIf="(item$ | async).id > 0" class="modal-title" id="modal-title">{{'GRANDPRIXS.DIALOGS.HEADERS.EDITGRANDPRIX' | translate}}</h4>
     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -20,16 +20,16 @@
       <div class="form-group">
         <label for="circuit">{{'FORM.LABELS.CIRCUIT' | translate}}</label>
         <select class="form-control" id="circuit" formControlName="circuitId">
-          <option *ngFor="let circuit of circuitsService.circuitsItems$ | async" [value]="circuit.value">{{ circuit.label }}</option>
+          <option *ngFor="let circuit of circuitsService.selectItems$ | async" [value]="circuit.value">{{ circuit.label }}</option>
         </select>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
-    <button *ngIf="(grandprix$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
+    <button *ngIf="(item$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
       [disabled]="!grandprixFormgroup.valid">{{'BUTTONS.CREATE' | translate}}</button>
-    <button *ngIf="(grandprix$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
+    <button *ngIf="(item$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(grandprixFormgroup)"
       [disabled]="!grandprixFormgroup.valid">{{'BUTTONS.SAVE' | translate}}</button>
   </div>
 </div>

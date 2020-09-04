@@ -1,32 +1,32 @@
 const database = require('../bin/database');
 const allCircuitsQuery = require('./all-circuits.query');
-// const deleteDriverCommand = require('./delete-driver.command');
-// const insertDriverCommand = require('./insert-driver.command');
-// const updateDriverCommand = require('./update-driver.command.js');
+const deleteCircuitCommand = require('./delete-circuit.command');
+const insertCircuitCommand = require('./insert-circuit.command');
+const updateCircuitCommand = require('./update-circuit.command');
 
 const createGetAllCircuitsQuery = () => {
   const query = allCircuitsQuery.create();
   return database.createSqlCommand(query.queryText, query.inputParameters);
 }
 
-// const createInsertDriverCommand = (driver) => {
-//   const command = insertDriverCommand.create(driver);
-//   return database.createSqlCommand(command.queryText, command.inputParameters);
-// }
+const createInsertCircuitCommand = (circuit) => {
+  const command = insertCircuitCommand.create(circuit);
+  return database.createSqlCommand(command.queryText, command.inputParameters);
+}
 
-// const createUpdateDriverCommand = (team) => {
-//   const command = updateDriverCommand.create(team);
-//   return database.createSqlCommand(command.queryText, command.inputParameters);
-// }
+const createUpdateCircuitCommand = (circuit) => {
+  const command = updateCircuitCommand.create(circuit);
+  return database.createSqlCommand(command.queryText, command.inputParameters);
+}
 
-// const createDeleteDriverCommand = (id) => {
-//     const command = deleteDriverCommand.create(id);
-//     return database.createSqlCommand(command.queryText, command.inputParameters);
-// }
+const createDeleteCircuitCommand = (id) => {
+    const command = deleteCircuitCommand.create(id);
+    return database.createSqlCommand(command.queryText, command.inputParameters);
+}
 
 module.exports = {
   createGetAllCircuitsQuery,
-  // createInsertDriverCommand,
-  // createUpdateDriverCommand,
-  // createDeleteDriverCommand
+  createInsertCircuitCommand,
+  createUpdateCircuitCommand,
+  createDeleteCircuitCommand
 }

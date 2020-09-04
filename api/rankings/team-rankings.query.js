@@ -13,7 +13,7 @@ class TeamRankingsQuery {
             INNER JOIN GrandPrix GP ON GP.Id = RR.GrandPrixId
             INNER JOIN ScoreTable ST ON ST.Position = RR.Position
             INNER JOIN Teams TMS ON TMS.Id = D.TeamId 
-            WHERE GP.[Year] = 2020
+            WHERE GP.[Year] = YEAR(GETDATE())
             GROUP BY TMS.[Name]
             ORDER by Score desc`;
   }

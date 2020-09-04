@@ -10,7 +10,18 @@ class InsertTeamCommand {
     return `INSERT INTO Teams (Name, Fullname, Manufacturer, CountryId)
             VALUES(@Name, @Fullname, @Manufacturer, @CountryId)
 
-            SELECT SCOPE_IDENTITY() AS id`;
+            DECLARE @TeamId INT;
+            SELECT @TeamId = SCOPE_IDENTITY();
+            
+            SELECT 
+              T.id, 
+              T.name,
+              T.fullname, 
+              T.manufacturer,
+              C.Id AS countryId
+            FROM Teams T
+            INNER JOIN Countries C ON C.Id = T.CountryId
+            WHERE T.Id = @TeamId`;
   }
 
   get inputParameters() {

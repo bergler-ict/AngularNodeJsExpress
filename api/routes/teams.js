@@ -29,12 +29,11 @@ router.get('/compact', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     // Model validation
-    if(validator.validate(req.body)) {
-      const newTeam = { ...req.body };
+    const newTeam = req.body;
+    if(validator.validate(newTeam)) {
       const result = await teams.create(newTeam);
-      newTeam.id = result;
       res.status(201); // Set http status code 201 Created.
-      res.send(newTeam); // return created resource (team) as response.
+      res.send(result); // return created resource (team) as response.
     } else {
       res.status(400); // Set http status code 400 Bad request.
       res.send('Invalid request. One ore more required properties are missing or containing invalid values.');

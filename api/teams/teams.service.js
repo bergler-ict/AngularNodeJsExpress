@@ -26,14 +26,14 @@ const getAllTeams = async () => {
 const insertTeam = async (team) => {
   const sqlCommand = factory.createInsertTeamCommand(team);
   const result = await database.executeSql(sqlCommand);
-  return result.recordsets[0][0].id; // returns the new id value of inserted team.
+  return result.recordset[0]; // returns the new team object.
 }
 
 const updateTeam = async (team) => {
   const sqlCommand = factory.createUpdateTeamCommand(team);
   const result = await database.executeSql(sqlCommand);
   console.log('Update result', result);
-  return result.rowsAffected[0]; // returns number of updated rows.
+  return result.recordsets[0][0]; // returns the updated team object.
 }
 
 const deleteTeam = async (id) => {

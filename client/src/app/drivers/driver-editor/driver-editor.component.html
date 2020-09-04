@@ -1,7 +1,7 @@
 <div class="dialog">
   <div class="modal-header">
-    <h4 *ngIf="(driver$ | async).id === 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.NEWDRIVER' | translate}}</h4>
-    <h4 *ngIf="(driver$ | async).id > 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.EDITDRIVER' | translate}}</h4>
+    <h4 *ngIf="(item$ | async).id === 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.NEWDRIVER' | translate}}</h4>
+    <h4 *ngIf="(item$ | async).id > 0" class="modal-title" id="modal-title">{{'DRIVERS.DIALOGS.HEADERS.EDITDRIVER' | translate}}</h4>
     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -32,22 +32,22 @@
       <div class="form-group">
         <label for="team">{{'FORM.LABELS.TEAM' | translate}}</label>
         <select class="form-control" id="team" formControlName="teamId">
-          <option *ngFor="let team of teamsService.teamSelectItems$ | async" [value]="team.value">{{ team.label }}</option>
+          <option *ngFor="let team of teamsService.selectItems$ | async" [value]="team.value">{{ team.label }}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="country">{{'FORM.LABELS.COUNTRY' | translate}}</label>
         <select class="form-control" id="country" formControlName="countryId">
-          <option *ngFor="let country of countryService.countrySelectItems$ | async" [value]="country.value">{{ country.label }}</option>
+          <option *ngFor="let country of countryService.selectItems$ | async" [value]="country.value">{{ country.label }}</option>
         </select>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-light" (click)="modal.dismiss()">{{'BUTTONS.CANCEL' | translate}}</button>
-    <button *ngIf="(driver$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
+    <button *ngIf="(item$ | async).id === 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
       [disabled]="!driverFormgroup.valid">{{'BUTTONS.CREATE' | translate}}</button>
-    <button *ngIf="(driver$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
+    <button *ngIf="(item$ | async).id > 0" type="button" class="btn btn-success" (click)="modal.close(driverFormgroup)"
       [disabled]="!driverFormgroup.valid">{{'BUTTONS.SAVE' | translate}}</button>
   </div>
 </div>

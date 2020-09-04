@@ -3,11 +3,6 @@
 </div>
 
 <div class="container mt-5 pt-0">
-  <div class="container-fluid alert" *ngIf="messagesService.show$ | async"> 
-    <ngb-alert  [type]="messagesService.type$ | async" [dismissible]="messagesService.dismissable$ | async" (close)="onAlertClose()">
-      {{ messagesService.message$ | async }}
-    </ngb-alert>
-  </div>
   <router-outlet></router-outlet>
   <router-outlet name="rankings"></router-outlet>
 </div>

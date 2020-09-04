@@ -34,7 +34,7 @@
               </div>
               <div class="col-6">
                 <select class="form-control" id="country" formControlName="driverId">
-                  <option *ngFor="let driver of driversService.drivers$ | async" [value]="driver.id">{{ driver.name }}</option>
+                  <option *ngFor="let driver of driversService.items$ | async" [value]="driver.id">{{ driver.name }}</option>
                 </select>
               </div>
               <div class="col-3">

@@ -9,13 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit{
 
-  constructor(public messagesService: MessagesService, private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
     this.translateService.use('nl');
-  }
-
-  onAlertClose() {
-    this.messagesService.show$.next(false);
   }
 }

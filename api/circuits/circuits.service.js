@@ -27,28 +27,29 @@ const getAllCircuitsSelectItems = async () => {
   const results = await getAllCircuits();
   return results.map(r => { return { label: r.name, value: r.id } });
 }
-// const insertDriver = async (driver) => {
-//   const sqlCommand = factory.createInsertDriverCommand(driver);
-//   const result = await database.executeSql(sqlCommand);
-//   return result.recordset[0]; // returns the new created driver object.
-// }
 
-// const updateDriver = async (driver) => {
-//   const sqlCommand = factory.createUpdateDriverCommand(driver);
-//   const result = await database.executeSql(sqlCommand);
-//   return result.recordsets[0][0]; // returns updated driver object
-// }
+const insertCircuit = async (circuit) => {
+  const sqlCommand = factory.createInsertCircuitCommand(circuit);
+  const result = await database.executeSql(sqlCommand);
+  return result.recordset[0]; // returns the new created circuit object.
+}
 
-// const deleteDriver = async (id) => {
-//   const sqlCommand = factory.createDeleteDriverCommand(id);
-//   const result = await database.executeSql(sqlCommand);
-//   return result.rowsAffected[0];
-// }
+const updateCircuit = async (circuit) => {
+  const sqlCommand = factory.createUpdateCircuitCommand(circuit);
+  const result = await database.executeSql(sqlCommand);
+  return result.recordsets[0][0]; // returns updated circuit object
+}
+
+const deleteCircuit = async (id) => {
+  const sqlCommand = factory.createDeleteCircuitCommand(id);
+  const result = await database.executeSql(sqlCommand);
+  return result.rowsAffected[0];
+}
 
 module.exports = {
   all: getAllCircuits,
-  compact: getAllCircuitsSelectItems
-  // create: insertDriver,
-  // modify: updateDriver,
-  // delete: deleteDriver
+  compact: getAllCircuitsSelectItems,
+  create: insertCircuit,
+  modify: updateCircuit,
+  delete: deleteCircuit
 };

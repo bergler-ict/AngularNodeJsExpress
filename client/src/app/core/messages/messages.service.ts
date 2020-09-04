@@ -1,37 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { MessageType } from './message-types.enum';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
-  message$ = new BehaviorSubject<string>('');
-  type$ = new BehaviorSubject<string>('');
-  dismissable$ = new BehaviorSubject<boolean>(false);
-  show$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService, private toastr: ToastrService) { }
 
-  showAlert(message: string, type: MessageType, closable: boolean){
-    this.message$.next(message);
-    this.type$.next(type);
-    this.dismissable$.next(closable);
-    this.show$.next(true);
-  }
-
-  showSelfclosingAlert(message: string, type: MessageType, milliSeconds: number) {
-    this.showAlert(message, type, false);
-    setTimeout(() => {
-      this.show$.next(false);
-    }, milliSeconds);
-  }
-
-  showSelfclosingTranslatedAlert(translationKey: string, type: MessageType, milliSeconds: number) {
-    this.showAlert(this.translateService.instant(translationKey), type, false);
-    setTimeout(() => {
-      this.show$.next(false);
-    }, milliSeconds);
+  show(messageTranslationKey: string, type: MessageType): void {
+    switch (type) {
+      case MessageType.Success:
+        this.toastr.success(this.translateService.instant(messageTranslationKey), this.translateService.instant('TOAST.SUCCESSTITLE'));
+        break;
+      case MessageType.Danger:
+        this.toastr.error(this.translateService.instant(messageTranslationKey), this.translateService.instant('TOAST.ERRORTITLE'));
+        break;
+      case MessageType.Warning:
+        this.toastr.warning(this.translateService.instant(messageTranslationKey), this.translateService.instant('TOAST.WARNINGTITLE'));
+        break;
+    }
   }
 }

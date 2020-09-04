@@ -9,13 +9,23 @@ class UpdateTeamCommand {
   get queryText() {
     return `UPDATE Teams
             SET Name = @Name, FullName = @Fullname, Manufacturer = @Manufacturer, CountryId = @CountryId
-            WHERE Id = @Id`;
+            WHERE Id = @TeamId
+            
+            SELECT 
+              T.id, 
+              T.name,
+              T.fullname, 
+              T.manufacturer,
+              C.Id AS countryId
+            FROM Teams T
+            INNER JOIN Countries C ON C.Id = T.CountryId
+            WHERE T.Id = @TeamId`;
   }
 
   get inputParameters() {
     return [
       {
-        name: 'Id',
+        name: 'TeamId',
         type: mssql.Int(),
         value: this._team.id
       },
